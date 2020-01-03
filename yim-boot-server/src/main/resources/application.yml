@@ -1,0 +1,43 @@
+server:
+  port: 8080
+  host: 127.0.0.1
+
+
+##################################################################
+#                         Freemarker Config                      #
+##################################################################
+spring:
+  freemarker:
+    suffix: .html
+    charset: utf-8
+    content-type: text/html
+    cache: false
+    templateLoaderPath: classpath:/page/
+    settings:
+      auto_import: /ftl/spring.ftl as spring
+  messages:
+    encoding: UTF-8
+    basename: i18n/messages
+
+
+##################################################################
+#                         YIM Config                             #
+##################################################################
+yim:
+  server:
+    port: 23456
+apple:
+  apns:
+    debug: false
+    p12:
+      password: your p12 password
+      file: /apns/lvxin.p12
+
+
+##################################################################
+#                         System Config                          #
+##################################################################
+sys:
+  message:
+    dispatch:
+      url: http://%1$s:${server.port}/api/message/dispatch
