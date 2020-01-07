@@ -1,8 +1,8 @@
-/*CIM服务器IP*/
-var CIM_HOST = "127.0.0.1";
-/*CIM服务端口*/
-var CIM_PORT = 23456;
-var CIM_URI="ws://"+CIM_HOST+":"+CIM_PORT;
+/*YIM服务器IP*/
+var YIM_HOST = "127.0.0.1";
+/*YIM服务端口*/
+var YIM_PORT = 23456;
+var YIM_URI="ws://"+YIM_HOST+":"+YIM_PORT;
 
 var CMD_HEARTBEAT_RESPONSE = new Uint8Array([67,82]);
 var SDK_VERSION = "1.0.0";
@@ -19,19 +19,19 @@ var REPLYBODY = 4;
 
 var socket;
 var manualStop = false;
-var CIMPushManager = {};
-CIMPushManager.connection = function(){
+var YIMPushManager = {};
+YIMPushManager.connection = function(){
 	manualStop = false;
 	window.localStorage.account = '';
-	socket = new WebSocket(CIM_URI);
+	socket = new WebSocket(YIM_URI);
 	socket.cookieEnabled=false;
 	socket.binaryType = 'arraybuffer';
-	socket.onopen = CIMPushManager.innerOnConnectionSuccessed;
-	socket.onmessage = CIMPushManager.innerOnMessageReceived;
-    socket.onclose = CIMPushManager.innerOnConnectionClosed;
+	socket.onopen = YIMPushManager.innerOnConnectionSuccessed;
+	socket.onmessage = YIMPushManager.innerOnMessageReceived;
+    socket.onclose = YIMPushManager.innerOnConnectionClosed;
 };
 
-CIMPushManager.bindAccount = function(account){
+YIMPushManager.bindAccount = function(account){
 	
 	window.localStorage.account = account;
 	
@@ -51,32 +51,32 @@ CIMPushManager.bindAccount = function(account){
 	body.getDataMap().set("packageName", APP_PACKAGE);
 	body.getDataMap().set("deviceId", deviceId);
 	body.getDataMap().set("device", browser.name);
-	CIMPushManager.sendRequest(body);
+	YIMPushManager.sendRequest(body);
 };
 
-CIMPushManager.stop = function(){
+YIMPushManager.stop = function(){
 	manualStop = true;
 	socket.close();
 };
 
-CIMPushManager.resume = function(){
+YIMPushManager.resume = function(){
     manualStop = false;
-    CIMPushManager.connection();
+    YIMPushManager.connection();
 };
 
 
-CIMPushManager.innerOnConnectionSuccessed = function(){
+YIMPushManager.innerOnConnectionSuccessed = function(){
 	var account = window.localStorage.account;
 	if(account == '' || account == undefined){
 		onConnectionSuccessed();
 	}else{
-		CIMPushManager.bindAccount(account);
+		YIMPushManager.bindAccount(account);
 	}
 };
  
  
 
-CIMPushManager.innerOnMessageReceived = function(e){
+YIMPushManager.innerOnMessageReceived = function(e){
 	var data = new Uint8Array(e.data);
 	
 	var type = data[0];
@@ -85,7 +85,7 @@ CIMPushManager.innerOnMessageReceived = function(e){
 	 * 收到服务端发来的心跳请求，立即回复响应，否则服务端会在10秒后断开连接
 	 */
 	if(type == S_H_RQ){
-		CIMPushManager.sendHeartbeatResponse();
+		YIMPushManager.sendHeartbeatResponse();
 		return;
 	}
 	
@@ -120,16 +120,16 @@ CIMPushManager.innerOnMessageReceived = function(e){
 	}
 };
 
-CIMPushManager.innerOnConnectionClosed = function(e){
+YIMPushManager.innerOnConnectionClosed = function(e){
 	if(!manualStop){
 		var time = Math.floor(Math.random()*(30-15+1)+15);
 		setTimeout(function(){
-			CIMPushManager.connection();
+			YIMPushManager.connection();
 		},time);
 	}
 };
 
-CIMPushManager.sendRequest = function(body){
+YIMPushManager.sendRequest = function(body){
 	
 	var data = body.serializeBinary();
 	var header = buildHeader(SENTBODY,data.length);
@@ -139,7 +139,7 @@ CIMPushManager.sendRequest = function(body){
 	socket.send(protubuf);
 };
 
-CIMPushManager.sendHeartbeatResponse = function(){
+YIMPushManager.sendHeartbeatResponse = function(){
 	var data = CMD_HEARTBEAT_RESPONSE;
 	var header = buildHeader(C_H_RS,data.length);
 	var protubuf =  new Uint8Array(data.length + header.length);

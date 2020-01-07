@@ -18,7 +18,7 @@ public interface YIMEventListener {
     void onMessageReceived(Message message);
 
     /**
-     * 当调用CIMPushManager.sendRequest()向服务端发送请求，获得相应时调用
+     * 当调用YIMPushManager.sendRequest()向服务端发送请求，获得相应时调用
      *
      * @param replybody
      */

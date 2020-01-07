@@ -21,7 +21,7 @@
    
    /**  当socket连接成功回调 **/
    function onConnectionSuccessed(){
-	   CIMPushManager.bindAccount($('#account').val());
+	   YIMPushManager.bindAccount($('#account').val());
    }
    
    /** 当收到请求回复时候回调  **/
@@ -74,7 +74,7 @@
 		    }
 		    showProcess('正在接入请稍后......');
 		    /**登录成功后创建连接****/
-		    CIMPushManager.connection();
+		    YIMPushManager.connection();
 	}
    
    

@@ -24,11 +24,11 @@ function doSendMessage(){
     {
        return;
     }
-    showProcess("<@spring.message 'module.console.cimsession.sending'/>");
+    showProcess("<@spring.message 'module.console.yimsession.sending'/>");
     $.post("/api/message/send", {content:message,action:2,sender:'system',receiver:account,format:'0'},
 	   function(data){
 	      hideProcess();
-	      showSTip("<@spring.message 'module.console.cimsession.send.success'/>");
+	      showSTip("<@spring.message 'module.console.yimsession.send.success'/>");
 	      doHideDialog("messageDialog");
      });
 }
@@ -49,37 +49,37 @@ function doSendMessage(){
 			<table style="width: 100%" class="utable">
 				<thead>
 					<tr class="tableHeader">
-						<th width="8%"><@spring.message 'module.console.cimsession.account'/></th>
-						<th width="6%"> <@spring.message 'module.console.cimsession.nid'/></th>
-						<th width="6%"><@spring.message 'module.console.cimsession.channel'/></th>
-						<th width="14%"><@spring.message 'module.console.cimsession.deviceid'/></th>
-						<th width="10%"><@spring.message 'module.console.cimsession.device.model'/></th>
-						<th width="6%"><@spring.message 'module.console.cimsession.app.version'/></th>
-						<th width="6%"><@spring.message 'module.console.cimsession.os.version'/></th>
-						<th width="6%"><@spring.message 'module.console.cimsession.online.time'/></th>
+						<th width="8%"><@spring.message 'module.console.yimsession.account'/></th>
+						<th width="6%"> <@spring.message 'module.console.yimsession.nid'/></th>
+						<th width="6%"><@spring.message 'module.console.yimsession.channel'/></th>
+						<th width="14%"><@spring.message 'module.console.yimsession.deviceid'/></th>
+						<th width="10%"><@spring.message 'module.console.yimsession.device.model'/></th>
+						<th width="6%"><@spring.message 'module.console.yimsession.app.version'/></th>
+						<th width="6%"><@spring.message 'module.console.yimsession.os.version'/></th>
+						<th width="6%"><@spring.message 'module.console.yimsession.online.time'/></th>
 						<th width="25%"><@spring.message 'module.common.location'/></th>
 						<th width="8%"><@spring.message "module.common.operation"/></th>
 					</tr>
 				</thead>
 				<tbody>
-               		<#list sessionList as cimsession>
+               		<#list sessionList as yimsession>
 						<tr style="height: 50px;">
-						    <td>${cimsession.account! }</td>
-							<td><#if cimsession.nid??>${cimsession.nid}</#if></td>
-							<td>${cimsession.channel! }</td>
-							<td>${cimsession.deviceId! }</td>
-							<td>${cimsession.deviceModel! }</td>
-							<td>${cimsession.clientVersion! }</td>
-	                        <td>${cimsession.systemVersion! }</td>
+						    <td>${yimsession.account! }</td>
+							<td><#if yimsession.nid??>${yimsession.nid}</#if></td>
+							<td>${yimsession.channel! }</td>
+							<td>${yimsession.deviceId! }</td>
+							<td>${yimsession.deviceModel! }</td>
+							<td>${yimsession.clientVersion! }</td>
+	                        <td>${yimsession.systemVersion! }</td>
 							<td>
-								<@spring.messageArgs  "module.console.cimsession.time.format",[((.now?long - cimsession.bindTime)/1000)?round?c]  />
+								<@spring.messageArgs  "module.console.yimsession.time.format",[((.now?long - yimsession.bindTime)/1000)?round?c]  />
 							</td>
-							<td>${cimsession.location!}</td>
+							<td>${yimsession.location!}</td>
 							<td>
 								<div class="btn-group btn-group-xs">
-									<button type="button" class="btn btn-primary" style="padding: 5px;" onclick="showMessageDialog('${cimsession.account!}')">
+									<button type="button" class="btn btn-primary" style="padding: 5px;" onclick="showMessageDialog('${yimsession.account!}')">
 										<span class="glyphicon glyphicon-send" style="top:2px;"></span>
-										<@spring.message 'module.console.cimsession.send.message'/>
+										<@spring.message 'module.console.yimsession.send.message'/>
 									</button>
 								</div>
 							</td>
@@ -95,12 +95,12 @@ function doSendMessage(){
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title"><@spring.message 'module.console.cimsession.send.message'/></h4>
+                <h4 class="modal-title"><@spring.message 'module.console.yimsession.send.message'/></h4>
 			</div>
 			<div class="modal-body">
 				<div class="form-groupBuy">
 					<label for="Amobile">
-						<@spring.message 'module.console.cimsession.receiver'/>
+						<@spring.message 'module.console.yimsession.receiver'/>
 					</label>
 					<input type="text" class="form-control" id="Saccount" name="account"
 						style="width: 100%; font-size: 20px; font-weight: bold;height:40px;"
@@ -108,7 +108,7 @@ function doSendMessage(){
 				</div>
 				<div class="form-groupBuy" style="margin-top: 20px;">
 					<label for="exampleInputFile">
-						<@spring.message 'module.console.cimsession.message'/>
+						<@spring.message 'module.console.yimsession.message'/>
 					</label>
 					<textarea rows="10" style="width: 100%; height: 200px;" id="message" name="message" class="form-control"></textarea>
 				</div>
